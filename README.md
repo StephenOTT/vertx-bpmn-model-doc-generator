@@ -114,5 +114,7 @@ The `extensionElements` property is a special property that provides the Camunda
 1. Provide a File Writer
 1. Provide a HTTP endpoint to get the rendered template as different content types such as JSON and HTML
 1. Provide a HTTP Endpoint to inject Config and FTL templates so the parser can live as a "microservice"
+1. Generate Image of BPMN file
+1. Generate Zoomed in Image of BPMN Element in context of overall file
 
 
