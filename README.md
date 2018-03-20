@@ -50,82 +50,137 @@ Run Gradle Build: `./gradlew clean run`
 Example:
 
 ```freemarker
-<#list userTasks as userTask>                                   
-    <tr>
-      <td>NAME: ${userTask.getName()}</td>
-      <td>ELEMENT TYPE: ${userTask.getElementType().getTypeName()}</td>
-      <td>ASSIGNEE: ${userTask.getCamundaAssignee()}</td>
-      <tr>
-      <#list userTask.getExtensionElements().getElementsQuery().filterByType(extensionElements).singleResult().getCamundaProperties() as extensionElement>
-        <td>KEY: ${extensionElement.getCamundaName()}     VALUE: ${extensionElement.getCamundaValue()}</td>
-      </#list>
-      </tr
-   </tr>
+<#list tasks_>
+Elements:
+  <#items as task>
+  Task Type:
+  ${task.getElementType().getTypeName()}
+
+  Task Name:
+  ${task.getName()}
+
+  Custom Attributes:
+  <#list task.getExtensionElements().getElementsQuery().filterByType(extensionElements_).singleResult().getCamundaProperties()>
+    <#items as extensionElement>
+      Attribute:
+      Key: ${extensionElement.getCamundaName()}
+      Value: ${extensionElement.getCamundaValue()}
+
+    </#items>
+  </#list>
+--------------------
+
+  </#items>
 </#list>
 ```
 
-# FreeMarker Input Example
+# Config File
 
-This is a example of the object/hashmap that is inserted into Freemarker
+The template_inputs property is inserted into freemarker.  Any property with a underscore `_` at the end of the property name will go through `eval()`
 
 ```js
 ...
-var inputs = {
-  "extensionElements": instanceClass('camunda.CamundaProperties'),
-  "userTasks": modelInstance.getModelElementsByType(instanceClass('UserTask'))
+{
+  "template_inputs": {
+    "extensionElements_": "instanceClass('camunda.CamundaProperties')",
+    "tasks_": "modelInstance.getModelElementsByType(instanceClass('Task'))"
+  },
+  "template_path": "myTemplate.ftl"
 }
 ...
 ```
 
-The `extensionElements` property is a special property that provides the CamundaProperties Class for use in the FreeMarker template such as:
+The `extensionElements_` property is a special property that provides the CamundaProperties Class for use in the FreeMarker template such as:
 
 ```freemarker
-<#list userTask.getExtensionElements().getElementsQuery().filterByType(extensionElements).singleResult().getCamundaProperties() as extensionElement>
+<#list task.getExtensionElements().getElementsQuery().filterByType(extensionElements_).singleResult().getCamundaProperties()>
 ```
 
 
 # Console Output
 
-```html
-    <tr>
-      <td>NAME: Step 1</td>
-      <td>ELEMENT TYPE: userTask</td>
-      <td>ASSIGNEE: steve</td>
-      <tr>
-        <td>KEY: order     VALUE: some order value</td>
-        <td>KEY: title     VALUE: some title value</td>
-        <td>KEY: failure     VALUE: some fail</td>
-        <td>KEY: resolution     VALUE: some resolution</td>
-      </tr>
-   </tr>
-    <tr>
-      <td>NAME: Step 2</td>
-      <td>ELEMENT TYPE: userTask</td>
-      <td>ASSIGNEE: john</td>
-      <tr>
-        <td>KEY: order     VALUE: order123</td>
-        <td>KEY: title     VALUE: title321</td>
-        <td>KEY: failure     VALUE: fail000</td>
-        <td>KEY: resolution     VALUE: resABC</td>
-      </tr>
-   </tr>
-    <tr>
-      <td>NAME: Step 3</td>
-      <td>ELEMENT TYPE: userTask</td>
-      <td>ASSIGNEE: chris</td>
-      <tr>
-        <td>KEY: order     VALUE: My Order</td>
-        <td>KEY: title     VALUE: My Title</td>
-        <td>KEY: failure     VALUE: My Failure</td>
-        <td>KEY: resolution     VALUE: My Resolution</td>
-      </tr>
-   </tr>
+```console
+Elements:
+  Task Type:
+  userTask
+
+  Task Name:
+  Step 1
+
+  Custom Attributes:
+      Attribute:
+      Key: order
+      Value: some order value
+
+      Attribute:
+      Key: title
+      Value: some title value
+
+      Attribute:
+      Key: failure
+      Value: some fail
+
+      Attribute:
+      Key: resolution
+      Value: some resolution
+
+--------------------
+
+  Task Type:
+  userTask
+
+  Task Name:
+  Step 2
+
+  Custom Attributes:
+      Attribute:
+      Key: order
+      Value: order123
+
+      Attribute:
+      Key: title
+      Value: title321
+
+      Attribute:
+      Key: failure
+      Value: fail000
+
+      Attribute:
+      Key: resolution
+      Value: resABC
+
+--------------------
+
+  Task Type:
+  userTask
+
+  Task Name:
+  Step 3
+
+  Custom Attributes:
+      Attribute:
+      Key: order
+      Value: My Order
+
+      Attribute:
+      Key: title
+      Value: My Title
+
+      Attribute:
+      Key: failure
+      Value: My Failure
+
+      Attribute:
+      Key: resolution
+      Value: My Resolution
+
+--------------------
 ```
 
 # TODO / Enhancements:
 
-1. Provide external / injectable `input` object as a HOCON file.
-1. Config/Input defines the Template
+1. <s>Provide external / injectable `input` object as a json file.</s>
+1. <s>Config/Input defines the Template</s>
 1. Provide a File Writer
 1. Add more generation get Elements call so that all elements are gotten and the FreeMarker template will sub-navigate the tree of elements. (Removes the current need to setup "Per Element Type" properties in the `inputs` object)
 1. Provide a HTTP endpoint to get the rendered template as different content types such as JSON and HTML

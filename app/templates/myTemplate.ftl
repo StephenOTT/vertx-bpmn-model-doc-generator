@@ -1,12 +1,23 @@
-<#list userTasks as userTask>                                   
-    <tr>
-      <td>NAME: ${userTask.getName()}</td>
-      <td>ELEMENT TYPE: ${userTask.getElementType().getTypeName()}</td>
-      <td>ASSIGNEE: ${userTask.getCamundaAssignee()}</td>
-      <tr>
-      <#list userTask.getExtensionElements().getElementsQuery().filterByType(extensionElements).singleResult().getCamundaProperties() as extensionElement>
-        <td>KEY: ${extensionElement.getCamundaName()}     VALUE: ${extensionElement.getCamundaValue()}</td>
-      </#list>
-      </tr>
-   </tr>
+
+<#list tasks_>
+Elements:
+  <#items as task>
+  Task Type:
+  ${task.getElementType().getTypeName()}
+
+  Task Name:
+  ${task.getName()}
+
+  Custom Attributes:
+  <#list task.getExtensionElements().getElementsQuery().filterByType(extensionElements_).singleResult().getCamundaProperties()>
+    <#items as extensionElement>
+      Attribute:
+      Key: ${extensionElement.getCamundaName()}
+      Value: ${extensionElement.getCamundaValue()}
+
+    </#items>
+  </#list>
+--------------------
+
+  </#items>
 </#list>

@@ -5,7 +5,7 @@ exports.vertxStop = function() {
   console.log('Stopping primary verticle')
 }
 
-// var _ = require('lodash')
+var _ = require('lodash')
 
 // Setup classload to current path for this verticle
 var classloader = java.lang.Thread.currentThread().getContextClassLoader()
@@ -37,11 +37,24 @@ var inputs = {
 }
 // User Tasks Model Element: https://docs.camunda.org/javadoc/camunda-bpm-platform/7.8/org/camunda/bpm/model/bpmn/instance/UserTask.html
 
+var inputs_pre = JSON.parse(org.apache.commons.io.IOUtils.toString(classloader.getResourceAsStream('template_config.json'), 'UTF-8'))
+var inputs_post = inputs_pre
+
+_.forOwn(inputs_post['template_inputs'], function(value, key) {
+  // Any property in the template)inputs object that 
+  // has a property name that end with a underscore(_) 
+  // will go through eval().
+  if (_.endsWith(key, '_')){
+    inputs_post['template_inputs'][key] = eval(value)
+  }
+})
+
+var templatePath = inputs_post['template_path']
 
 // Render Template
-var template = cfg.getTemplate("myTemplate.ftl");
+var template = cfg.getTemplate(templatePath);
 var writer = new java.io.StringWriter()
-template.process(inputs, writer);
+template.process(inputs_post['template_inputs'], writer);
 
 // print the rendered template to console
 print(writer)

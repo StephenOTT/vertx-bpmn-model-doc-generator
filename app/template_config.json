@@ -1,0 +1,7 @@
+{
+  "template_inputs": {
+    "extensionElements_": "instanceClass('camunda.CamundaProperties')",
+    "tasks_": "modelInstance.getModelElementsByType(instanceClass('Task'))"
+  },
+  "template_path": "myTemplate.ftl"
+}
