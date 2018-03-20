@@ -3,6 +3,11 @@
 This is a use case example of using the CamundaBPM (Camunda.org) Model API with Vertx.
 Allows you to provide a BPMN file which will be read and parsed by Camunda's Java Model API and then rendered through a provided FreeMarker template.
 
+## Still not sure what this does...
+
+This lets you provide a FreeMarker template and a BPMN file; the output is a rendered template.  The purpose is to allow someone to navigate the Camunda BPMN model API directly in the FreeMarker template in order to easily generate documentation for BPMN files.
+
+# Setup
 
 Install NPM Dependencies: `./gradlew clean npmInstall`
 
@@ -63,7 +68,7 @@ The `extensionElements` property is a special property that provides the Camunda
         <td>KEY: title     VALUE: some title value</td>
         <td>KEY: failure     VALUE: some fail</td>
         <td>KEY: resolution     VALUE: some resolution</td>
-      </tr
+      </tr>
    </tr>
     <tr>
       <td>NAME: Step 2</td>
@@ -74,7 +79,7 @@ The `extensionElements` property is a special property that provides the Camunda
         <td>KEY: title     VALUE: title321</td>
         <td>KEY: failure     VALUE: fail000</td>
         <td>KEY: resolution     VALUE: resABC</td>
-      </tr
+      </tr>
    </tr>
     <tr>
       <td>NAME: Step 3</td>
@@ -85,7 +90,7 @@ The `extensionElements` property is a special property that provides the Camunda
         <td>KEY: title     VALUE: My Title</td>
         <td>KEY: failure     VALUE: My Failure</td>
         <td>KEY: resolution     VALUE: My Resolution</td>
-      </tr
+      </tr>
    </tr>
 ```
 
@@ -112,6 +117,7 @@ The `extensionElements` property is a special property that provides the Camunda
 1. Provide external / injectable `input` object as a HOCON file.
 1. Config/Input defines the Template
 1. Provide a File Writer
+1. Add more generation get Elements call so that all elements are gotten and the FreeMarker template will sub-navigate the tree of elements. (Removes the current need to setup "Per Element Type" properties in the `inputs` object)
 1. Provide a HTTP endpoint to get the rendered template as different content types such as JSON and HTML
 1. Provide a HTTP Endpoint to inject Config and FTL templates so the parser can live as a "microservice"
 1. Generate Image of BPMN file
