@@ -47,6 +47,8 @@ Run Gradle Build: `./gradlew clean run`
 
 # FreeMarker Template
 
+template is loaded from `app/templates/myTemplate.ftl`
+
 Example:
 
 ```freemarker
@@ -76,7 +78,9 @@ Elements:
 
 # Config File
 
-The template_inputs property is inserted into freemarker.  Any property with a underscore `_` at the end of the property name will go through `eval()`
+The template_inputs property is inserted into freemarker.  Any property with a underscore `_` at the end of the property name will go through `eval()`.
+
+Config is loaded from `app/template_config.json`
 
 ```js
 ...
