@@ -19,6 +19,32 @@ Run Gradle Build: `./gradlew clean run`
 1. User Tasks Model Element: https://docs.camunda.org/javadoc/camunda-bpm-platform/7.8/org/camunda/bpm/model/bpmn/instance/UserTask.html
 
 
+# BPMN
+
+![bpmn image](./app/bpmn/myProcess.png)
+![extension configuration](./app/bpmn/extension_config.png)
+
+
+## BPMN File XML Snippet
+
+```xml
+...
+    <bpmn:userTask id="Task_0w364uq" name="Step 3" camunda:assignee="chris">
+      <bpmn:extensionElements>
+        <camunda:properties>
+          <camunda:property name="order" value="My Order" />
+          <camunda:property name="title" value="My Title" />
+          <camunda:property name="failure" value="My Failure" />
+          <camunda:property name="resolution" value="My Resolution" />
+        </camunda:properties>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_0adri7o</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_15kfmnc</bpmn:outgoing>
+    </bpmn:userTask>
+...
+```
+
+
 # FreeMarker Template
 
 Example:
@@ -43,10 +69,12 @@ Example:
 This is a example of the object/hashmap that is inserted into Freemarker
 
 ```js
+...
 var inputs = {
   "extensionElements": instanceClass('camunda.CamundaProperties'),
   "userTasks": modelInstance.getModelElementsByType(instanceClass('UserTask'))
 }
+...
 ```
 
 The `extensionElements` property is a special property that provides the CamundaProperties Class for use in the FreeMarker template such as:
@@ -93,24 +121,6 @@ The `extensionElements` property is a special property that provides the Camunda
       </tr>
    </tr>
 ```
-
-# BPMN File XML Snippet
-
-```xml
-    <bpmn:userTask id="Task_0w364uq" name="Step 3" camunda:assignee="chris">
-      <bpmn:extensionElements>
-        <camunda:properties>
-          <camunda:property name="order" value="My Order" />
-          <camunda:property name="title" value="My Title" />
-          <camunda:property name="failure" value="My Failure" />
-          <camunda:property name="resolution" value="My Resolution" />
-        </camunda:properties>
-      </bpmn:extensionElements>
-      <bpmn:incoming>SequenceFlow_0adri7o</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_15kfmnc</bpmn:outgoing>
-    </bpmn:userTask>
-```
-
 
 # TODO / Enhancements:
 
