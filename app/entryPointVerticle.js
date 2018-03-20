@@ -35,7 +35,7 @@ var inputs = {
   "extensionElements": instanceClass('camunda.CamundaProperties'),
   "userTasks": modelInstance.getModelElementsByType(instanceClass('UserTask'))
 }
-// User Tasks Model Element: https://docs.camunda.org/javadoc/camunda-bpm-platform/7.8/?org/camunda/bpm/model/bpmn/instance/package-summary.html
+// User Tasks Model Element: https://docs.camunda.org/javadoc/camunda-bpm-platform/7.8/org/camunda/bpm/model/bpmn/instance/UserTask.html
 
 
 // Render Template

@@ -11,7 +11,7 @@ Run Gradle Build: `./gradlew clean run`
 # References
 
 1. https://docs.camunda.org/javadoc/camunda-bpm-platform/7.8/?org/camunda/bpm/model/bpmn/instance/package-summary.html
-1. User Tasks Model Element: https://docs.camunda.org/javadoc/camunda-bpm-platform/7.8/?org/camunda/bpm/model/bpmn/instance/package-summary.html
+1. User Tasks Model Element: https://docs.camunda.org/javadoc/camunda-bpm-platform/7.8/org/camunda/bpm/model/bpmn/instance/UserTask.html
 
 
 # FreeMarker Temaplate
