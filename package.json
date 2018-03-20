@@ -1,0 +1,9 @@
+{
+  "//": "This package.json file is used for downloading npm packages.",
+  "dependencies":{
+    "lodash": "4.17.5"
+  },
+  "devDependencies":{
+  },
+  "license": "MIT"
+}
